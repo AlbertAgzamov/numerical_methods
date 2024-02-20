@@ -10,8 +10,8 @@ class Method():
         self.f = f
         self.num_points = num_points
         self.stepsize = 1 / (num_points - 1)
-        self.X = np.zeros(num_points - 1)
-        self.Y = np.zeros(num_points - 1)
+        self.X = np.zeros(num_points)
+        self.Y = np.zeros(num_points)
         self.yi = y0
         self.xi = 0
         self.Y[0] = self.yi
@@ -23,7 +23,7 @@ class EulerMethod(Method):
     def __init__(self, f, num_points, y0):
         Method.__init__(self, f, num_points, y0)
     def calculate(self):
-        for i in range(1, self.num_points - 1):
+        for i in range(1, self.num_points):
             self.yi += self.stepsize * self.f(self.xi, self.yi)
             self.xi += self.stepsize
             self.Y[i] = self.yi
@@ -36,7 +36,7 @@ class CauchyMethod(Method):
     def __init__(self, f, num_points, y0):
         Method.__init__(self, f, num_points, y0)
     def calculate(self):
-        for i in range(1, self.num_points - 1):
+        for i in range(1, self.num_points):
             self.yi += self.stepsize * \
                        self.f(
                            self.xi + self.stepsize / 2, 
@@ -58,7 +58,7 @@ class TaylorMethod(Method):
         self.h2 = (self.stepsize ** 3) / 6
         self.h3 = (self.stepsize ** 4) / 24
     def calculate(self):
-        for i in range(1, self.num_points - 1):
+        for i in range(1, self.num_points):
             self.yi += self.stepsize * self.f(self.xi, self.yi) + \
                        self.h1 * self.d1f(self.xi, self.yi) + \
                        self.h2 * self.d2f(self.xi, self.yi) + \
@@ -67,11 +67,7 @@ class TaylorMethod(Method):
             self.Y[i] = self.yi
             self.X[i] = self.xi
         return self.X, self.Y
+    
 
 
-
-
-
-
-
-
+    
